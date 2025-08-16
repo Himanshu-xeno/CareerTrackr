@@ -1,19 +1,19 @@
-import {useState} from "react";
+import { useState } from "react";
 import Navbar from './components/Navbar.jsx';
+import SearchBar from './components/SearchBar.jsx';
 import AllApplications from "./pages/AllApplications";
 
-//Day 1 : Single page (routing comes later)
 export default function App(){
   const [applications] = useState([
     {
       id : "g-1",
       company : "Google",
-       title: "Frontend Intern",
+      title: "Frontend Intern",
       status: "Applied",
       dateApplied: "2025-08-10",
       notes: "Referred by college alum",
     },
-     {
+    {
       id: "ms-2",
       company: "Microsoft",
       title: "Backend Developer",
@@ -39,20 +39,33 @@ export default function App(){
     },
   ]);
 
-  return(
-    <div className="min-h-screen bg-gray-50 text-gray-900">
-      
-      {/* This is a Navbar components */}
-      <Navbar/>
-      
-      {/* Main section of Application */}
-      <main className="max-w-4xl mx-auto p-4">
-        
-        {/* The content of All Applications gets rendered here */}
-        <h1 className="text-2xl font-semibold mb-4">All Applications</h1>
-          <AllApplications applications={applications} />
-      </main>
+  // 🔹 State for search & filter
+  const [searchTerm, setSearchTerm] = useState("");
+  const [filter, setFilter] = useState("");
 
+  return (
+    <div className="min-h-screen bg-gray-50 text-gray-900">
+      <Navbar />
+
+      <main className="max-w-4xl mx-auto p-4">
+        {/* Heading + SearchBar on same row */}
+        <div className="flex justify-between items-center mb-4">
+          <h1 className="text-2xl font-semibold">All Applications</h1>
+          <SearchBar
+            searchTerm={searchTerm}
+            setSearchTerm={setSearchTerm}
+            filter={filter}
+            setFilter={setFilter}
+          />
+        </div>
+
+        {/* Application List */}
+        <AllApplications 
+          applications={applications} 
+          searchTerm={searchTerm}
+          filter={filter}
+        />
+      </main>
     </div>
-  )
+  );
 }
