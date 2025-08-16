@@ -1,35 +1,11 @@
-import ApplicationItem from "./ApplicationItem";
+import ApplicationCard from "./ApplicationCard";
 
-export default function ApplicationList({ applications, searchTerm, filter }) {
-  if (!applications?.length) {
-    return (
-      <div className="text-sm text-gray-600">
-        No applications yet. Add your first one!
-      </div>
-    );
-  }
-
-  const filteredApps = applications.filter((app) => {
-    const matchesSearch = app.company
-      .toLowerCase()
-      .includes(searchTerm.toLowerCase());
-
-    const matchesFilter = filter === "" || app.status === filter;
-
-    return matchesSearch && matchesFilter;
-  });
-
+export default function ApplicationList({ applications }) {
   return (
-    <div className="grid gap-3">
-      {filteredApps.length > 0 ? (
-        filteredApps.map((app) => (
-          <ApplicationItem key={app.id} app={app} />
-        ))
-      ) : (
-        <div className="text-sm text-gray-600">
-          No matching applications found.
-        </div>
-      )}
+    <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {applications.map((app) => (
+        <ApplicationCard key={app.id} application={app} />
+      ))}
     </div>
   );
 }
