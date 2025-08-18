@@ -1,28 +1,9 @@
 import { useState } from "react";
 import ApplicationList from "../components/ApplicationList";
 
-export default function AllApplications() {
+export default function AllApplications({ applications, updateStatus }) {
   const [searchTerm, setSearchTerm] = useState("");
   const [filter, setFilter] = useState("");
-
-  // Dummy applications
-  const applications = [
-  { id: 1, company: "Google", role: "SWE Intern", status: "Interview", date: "12 Aug 2025", location: "Bangalore" },
-  { id: 2, company: "Amazon", role: "Backend Dev", status: "Applied", date: "10 Aug 2025", location: "Hyderabad" },
-  { id: 3, company: "Microsoft", role: "Frontend Engg", status: "Offer", date: "05 Aug 2025", location: "Remote" },
-  { id: 4, company: "Uber", role: "Mobile Engineer", status: "Rejected", date: "29 Jul 2025", location: "Mumbai" },
-  { id: 5, company: "Facebook", role: "Fullstack Developer", status: "Applied", date: "08 Aug 2025", location: "Pune" },
-  { id: 6, company: "Apple", role: "iOS Developer", status: "Interview", date: "11 Aug 2025", location: "Bangalore" },
-  { id: 7, company: "Netflix", role: "Backend Engineer", status: "Applied", date: "09 Aug 2025", location: "Remote" },
-  { id: 8, company: "Adobe", role: "Frontend Developer", status: "Offer", date: "03 Aug 2025", location: "Hyderabad" },
-  { id: 9, company: "Spotify", role: "Software Engineer", status: "Interview", date: "07 Aug 2025", location: "Bangalore" },
-  { id: 10, company: "Salesforce", role: "Fullstack Engineer", status: "Applied", date: "06 Aug 2025", location: "Pune" },
-  { id: 11, company: "Twitter", role: "Backend Dev", status: "Rejected", date: "01 Aug 2025", location: "Mumbai" },
-  { id: 12, company: "LinkedIn", role: "Frontend Engg", status: "Offer", date: "04 Aug 2025", location: "Remote" },
-  { id: 13, company: "Snapchat", role: "Mobile Engineer", status: "Applied", date: "10 Aug 2025", location: "Bangalore" },
-  { id: 14, company: "Tesla", role: "Software Intern", status: "Interview", date: "12 Aug 2025", location: "Palo Alto" },
-  { id: 15, company: "Airbnb", role: "Fullstack Developer", status: "Applied", date: "09 Aug 2025", location: "Remote" },
-];
 
   // Filter applications
   const filteredApplications = applications.filter((app) => {
@@ -60,7 +41,10 @@ export default function AllApplications() {
       </div>
 
       {/* Application Cards */}
-      <ApplicationList applications={filteredApplications} />
+      <ApplicationList
+        applications={filteredApplications}
+        updateStatus={updateStatus}
+      />
     </section>
   );
 }

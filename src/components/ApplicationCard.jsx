@@ -1,13 +1,13 @@
 import { Briefcase, Calendar, MapPin, Star } from "lucide-react";
 
-export default function ApplicationCard({ application }) {
+export default function ApplicationCard({ application, updateStatus }) {
   // Define colors for different statuses
   const statusColor = {
     Applied: "bg-blue-100 text-blue-800",
     Interview: "bg-yellow-100 text-yellow-800",
     Offer: "bg-green-100 text-green-800",
     Rejected: "bg-red-100 text-red-800",
-  }[application.status] ?? "bg-gray-100 text-gray-800"; // default color
+  }[application.status] ?? "bg-gray-100 text-gray-800";
 
   return (
     <div className="bg-white rounded-xl shadow p-5 hover:shadow-lg transition">
@@ -33,13 +33,18 @@ export default function ApplicationCard({ application }) {
         <p className="flex items-center gap-2">
           <Star className="w-4 h-4 text-yellow-400" /> {application.priority}
         </p>
-        {/* Status badge */}
-        <span
-          className={`inline-block text-sm font-semibold px-3 py-1 rounded-full ${statusColor}`}
-          style={{ minWidth: "fit-content", textAlign: "center" }}
+
+        {/* Status Dropdown */}
+        <select
+          value={application.status}
+          onChange={(e) => updateStatus(application.id, e.target.value)}
+          className={`px-3 py-1 rounded-full font-semibold text-sm ${statusColor}`}
         >
-          {application.status}
-        </span>
+          <option value="Applied">Applied</option>
+          <option value="Interview">Interview</option>
+          <option value="Offer">Offer</option>
+          <option value="Rejected">Rejected</option>
+        </select>
       </div>
     </div>
   );
