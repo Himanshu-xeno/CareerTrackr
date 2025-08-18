@@ -1,17 +1,17 @@
-# Node modules
+# dependencies
 node_modules/
-
-# Vite cache
 .vite/
 
-# Environment files
-.env
-.env.local
-
-# Build folders (if applicable)
+# production
 dist/
 build/
 
-# OS/system files
+# env files
+.env
+.env.local
+
+# IDE/config
+.vscode/
+*.log
 .DS_Store
 Thumbs.db
