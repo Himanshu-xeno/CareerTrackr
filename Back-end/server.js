@@ -3,7 +3,7 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 
-// ⬇️ Import routes here
+// ⬇️ Import routes
 import jobRoutes from "./routes/jobRoutes.js";
 
 dotenv.config();
@@ -20,7 +20,7 @@ app.get("/", (req, res) => {
   res.send("Backend is working 🚀");
 });
 
-// ⬇️ Use routes here
+// ⬇️ Use routes (ONLY once!)
 app.use("/api/jobs", jobRoutes);
 
 // Connect MongoDB
