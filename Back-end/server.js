@@ -3,6 +3,9 @@ import mongoose from "mongoose";
 import dotenv from "dotenv";
 import cors from "cors";
 
+// ⬇️ Import routes here
+import jobRoutes from "./routes/jobRoutes.js";
+
 dotenv.config();
 
 const app = express();
@@ -16,6 +19,9 @@ app.use(express.json());
 app.get("/", (req, res) => {
   res.send("Backend is working 🚀");
 });
+
+// ⬇️ Use routes here
+app.use("/api/jobs", jobRoutes);
 
 // Connect MongoDB
 mongoose.connect(process.env.MONGO_URI, {
