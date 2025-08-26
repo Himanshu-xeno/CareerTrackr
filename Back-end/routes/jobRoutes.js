@@ -1,4 +1,5 @@
 import express from 'express';
+import Job from "../models/Job.js";  // ⬅️ import the Job model
 
 const router = express.Router();
 
