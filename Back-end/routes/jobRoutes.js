@@ -4,6 +4,7 @@ import mongoose from 'mongoose';
 
 const router = express.Router();
 
+
 //POST : Add a new job 
 router.post("/", async (req,res) => {
   try {
@@ -26,15 +27,39 @@ router.post("/", async (req,res) => {
   }
 });
 
-//GET : fetch all jobs 
+
+//Improved GET : fetch jobs with optional filters + sort + pagination
 router.get("/", async (req,res) => {
   try {
-    const jobs = await Job.find();
-    res.json(jobs);
+    const {search, status, priority, sort, page = 1, limit = 50} = req.query;
+
+    const query = {};
+
+    if(search){
+      const re = new RegExp(search, 'i'); //Case sensitive
+      query.$or = [{ title : re}, { company : re}, { location : re}];
+    }
+    if(status) query.status = status;
+    if(priority) query.priority = priority;
+
+    //base mongoose query 
+    let q = Job.find(query);
+
+    if (sort === 'oldest') q = q.sort({ dateApplied: 1 });
+    else q = q.sort({ dateApplied: -1 }); // default: latest
+
+    //pagination
+    const pageNum = Math.max(1, parseInt(page));
+    const lim = Math.max(1, Math.min(100, parseInt(limit)));
+    q = q.skip((pageNum - 1) * lim).limit(lim);
+
+    const [jobs, total] = await Promise.all([ q.exec(), Job.countDocuments(query) ]);
+    res.json({ jobs, total, page: pageNum, limit: lim });
   } catch (err) {
-    res.status(500).json({ error : err.message });
+    res.status(500).json({ error: err.message });
   }
 });
+
 
 //GET : fetch single job by id 
 router.get('/:id', async (req,res) => {
@@ -52,6 +77,7 @@ router.get('/:id', async (req,res) => {
     res.status(500).json({error : err.message});
   }
 });
+
 
 //PATCH : partial update of Job
 router.patch("/:id", async (req, res) => {
@@ -86,6 +112,7 @@ router.patch("/:id", async (req, res) => {
     res.status(500).json({error : err.message});
   }
 });
+
 
 //DELETE : remove job by id 
 router.delete('/:id', async (req,res) => {
