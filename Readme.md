@@ -4,7 +4,7 @@ CareerTrackr is a **MERN-based web application** designed to help users **manage
 
 ## Demo
 
-_Add your live demo link here once deployed_
+https://career-trackr-shyf.vercel.app/
 
 ---
 
